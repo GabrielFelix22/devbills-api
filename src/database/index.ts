@@ -5,11 +5,10 @@ export async function setupMongo(): Promise<void> {
 		if (mongoose.connection.readyState === 1) {
 			return;
 		}
-
-		console.log('🎲 Connecting to debugger...');
+		console.log('🎲 Connecting to DB...');
 		await mongoose.connect(process.env.MONGO_URL as string);
-		console.log('✅ DB Connected!');
-	} catch (error) {
-		throw new Error('❌ DB not Connection.');
+		console.log('✔ Connected to DB!');
+	} catch {
+		throw new Error('❌ Db not connected.');
 	}
 }

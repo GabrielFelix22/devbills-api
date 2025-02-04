@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import { baseRoutes } from './base.route';
 import { categoriesRoutes } from './categories.route';
 
