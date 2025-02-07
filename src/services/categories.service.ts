@@ -1,12 +1,13 @@
 import type { CategoriesRepository } from '../database/repositories/categories.repository';
+import type { CreateCategoryDTO } from '../dtos/categories.dto';
 import { Category } from '../entities/category.entity';
 
 export class CategoriesService {
 	constructor(private categoriesRepository: CategoriesRepository) {}
-	async create(): Promise<Category> {
+	async create({ title, color }: CreateCategoryDTO): Promise<Category> {
 		const category = new Category({
-			title: ' Exemple Category',
-			color: '#ff33bb',
+			title,
+			color,
 		});
 
 		const createdCategory = await this.categoriesRepository.create(category);
