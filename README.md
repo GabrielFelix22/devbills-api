@@ -1,22 +1,22 @@
-# Criar transações (DONE)
+# Criar transações ()
 
     - id categoria, nome, valor, data, tipo
 
-# Listar as transações com filtros (DONE)
+# Listar as transações com filtros ()
 
     - por nome
     - por período (início e fim)
     - por categoria
 
-# Dados de saldo com filtros (DONE)
+# Dados de saldo com filtros ()
 
     - por período (início e fim)
 
-# Dados de despesas por categoria com filtros (DONE)
+# Dados de despesas por categoria com filtros ()
 
     - por período
 
-# Dados de balanço geral do ano com filtros (DONE)
+# Dados de balanço geral do ano com filtros ()
 
     - por ano
 
