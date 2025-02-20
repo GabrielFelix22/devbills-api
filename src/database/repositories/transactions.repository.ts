@@ -1,5 +1,6 @@
 import type {
   CreateTransactionDTO,
+  GetFinancialEvolutionDTO,
   IndexTransactionsDTO,
 } from '../../dtos/transactions.dto';
 import type { GetDashboardDTO } from '../../dtos/transactions.dto';
@@ -116,6 +117,50 @@ export class transactionsRepository {
       color: { $first: '$category.color' },
       amount: { $sum: '$amount' },
     });
+
+    return result;
+  }
+
+  async getFinancialEvolution({
+    year,
+  }: GetFinancialEvolutionDTO): Promise<Balance[]> {
+    const aggregate = this.model.aggregate<Balance>();
+
+    const result = await aggregate
+      .match({
+        date: {
+          $gte: new Date(`${year}-01-01`),
+          $lte: new Date(`${year}-12-31`),
+        },
+      })
+      .project({
+        _id: 0,
+        income: {
+          $cond: [{ $eq: ['$type', 'income'] }, '$amount', 0],
+        },
+        expense: {
+          $cond: [{ $eq: ['$type', 'expense'] }, '$amount', 0],
+        },
+        year: { $year: '$date' },
+        month: { $month: '$date' },
+      })
+      .group({
+        _id: ['$year', '$month'],
+        incomes: {
+          $sum: '$income',
+        },
+        expenses: {
+          $sum: '$expense',
+        },
+      })
+      .addFields({
+        balance: {
+          $subtract: ['$incomes', '$expenses'],
+        },
+      })
+      .sort({
+        _id: 1,
+      });
 
     return result;
   }
