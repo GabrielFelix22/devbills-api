@@ -3,12 +3,13 @@ import type { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import type { CreateCategoryDTO } from '../dtos/categories.dto';
 import type { CategoriesService } from '../services/categories.service';
+import type { BodyRequest } from './types';
 
 export class CategoriesController {
   constructor(private categoriesService: CategoriesService) {}
 
   create = async (
-    req: Request<unknown, unknown, CreateCategoryDTO>,
+    req: BodyRequest<CreateCategoryDTO>,
     res: Response,
     next: NextFunction,
   ) => {
